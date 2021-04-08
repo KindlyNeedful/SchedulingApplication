@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -146,12 +147,21 @@ public class appointmentFormController {
     }
 
 
+    /**
+     * This initialize method populates the Appointments table.
+     * @author Will Lapinski
+     */
     @FXML
     public void initialize() {
         if (debug) System.out.println("Appointment Form initializing...");
         if (debug) System.out.println("Authenticated user: " + authenticatedUser);
 
-
+        appt_tableView_appts.setItems(Appointment.getAppointmentList());
+        appt_tableColumn_title.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appt_tableColumn_description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        appt_tableColumn_location.setCellValueFactory(new PropertyValueFactory<>("location"));
+        appt_tableColumn_from.setCellValueFactory(new PropertyValueFactory<>("start"));
+        appt_tableColumn_to.setCellValueFactory(new PropertyValueFactory<>("end"));
 
     }
 }

@@ -79,6 +79,8 @@ public class loginFormController {
             if (user.getUser_Name().equals(username)) {
                 if (user.getPassword().equals(password)) {
                     System.out.println("Login successful.");
+                    login_textField_username.setText("");
+                    login_textField_password.setText("");
                     //Launch AppointmentForm, pass in the authenticated user.
                     launchAppointmentForm(user);
 

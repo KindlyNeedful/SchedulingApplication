@@ -47,15 +47,26 @@ public class appointmentFormController {
     @FXML
     private TableView appt_tableView_appts = new TableView();
     @FXML
+    private TableColumn appt_tableColumn_apptId = new TableColumn();
+    @FXML
     private TableColumn appt_tableColumn_title = new TableColumn();
     @FXML
     private TableColumn appt_tableColumn_description = new TableColumn();
     @FXML
     private TableColumn appt_tableColumn_location = new TableColumn();
     @FXML
+    private TableColumn appt_tableColumn_contact = new TableColumn();
+    @FXML
+    private TableColumn appt_tableColumn_type = new TableColumn();
+    @FXML
     private TableColumn appt_tableColumn_from = new TableColumn();
     @FXML
     private TableColumn appt_tableColumn_to = new TableColumn();
+    @FXML
+    private TableColumn appt_tableColumn_customerId = new TableColumn();
+
+    @FXML
+    private Label appt_label_errorOutput = new Label();
 
 
     private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -69,6 +80,7 @@ public class appointmentFormController {
     @FXML
     public void signOutHandler() {
         authenticatedUser = null;
+        appt_label_errorOutput.setText("");
         System.out.println("Exiting...");
         System.exit(1);
     }
@@ -97,6 +109,7 @@ public class appointmentFormController {
     @FXML
     public void launchSettingsForm(User authenticatedUser) {
         if (debug) System.out.println("Launching Settings Form as " + authenticatedUser + "...");
+        appt_label_errorOutput.setText("");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/settingsForm.fxml"));
             Parent root = loader.load();
@@ -118,47 +131,57 @@ public class appointmentFormController {
     }
     @FXML
     public void launchAppointmentUpdateForm(User authenticatedUser) {
-        if (debug) System.out.println("Launching Update Appointment / Details Form as " + authenticatedUser + "...");
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/updateAppointmentForm.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.DECORATED);
-            stage.setTitle("Update Appointment Form");
-            stage.setScene(new Scene(root));
-            stage.show();
+        if (appt_tableView_appts.getSelectionModel().getSelectedItems().isEmpty()) {
+            appt_label_errorOutput.setText("Error: please select an appointment.");
+        } else {
+            if (debug) System.out.println("Launching Update Appointment / Details Form as " + authenticatedUser + "...");
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/updateAppointmentForm.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.DECORATED);
+                stage.setTitle("Update Appointment Form");
+                stage.setScene(new Scene(root));
+                stage.show();
 
-            updateAppointmentFormController controller3 = loader.getController();
-            controller3.send(stage, authenticatedUser);
+                updateAppointmentFormController controller3 = loader.getController();
+                controller3.send(stage, authenticatedUser, (Appointment) appt_tableView_appts.getSelectionModel().getSelectedItem());
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     @FXML
     public void launchCancelAppointmentForm(User authenticatedUser) {
-        if (debug) System.out.println("Launching Cancel Appointment Form as " + authenticatedUser + "...");
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/cancelAppointmentForm.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.DECORATED);
-            stage.setTitle("Cancel Appointment Form");
-            stage.setScene(new Scene(root));
-            stage.show();
 
-            cancelAppointmentFormController controller4 = loader.getController();
-            controller4.send(stage, authenticatedUser);
+        if (appt_tableView_appts.getSelectionModel().getSelectedItems().isEmpty()) {
+            appt_label_errorOutput.setText("Error: please select an appointment.");
+        } else {
+            if (debug) System.out.println("Launching Cancel Appointment Form as " + authenticatedUser + "...");
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/cancelAppointmentForm.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.DECORATED);
+                stage.setTitle("Cancel Appointment Form");
+                stage.setScene(new Scene(root));
+                stage.show();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+                cancelAppointmentFormController controller4 = loader.getController();
+                controller4.send(stage, authenticatedUser, (Appointment) appt_tableView_appts.getSelectionModel().getSelectedItem());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     @FXML
     public void launchNewAppointmentForm() {
         if (debug) System.out.println("Launching New Appointment Form as " + authenticatedUser + "...");
+        appt_label_errorOutput.setText("");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/newAppointmentForm.fxml"));
             Parent root = loader.load();
@@ -195,6 +218,7 @@ public class appointmentFormController {
     }
 
 
+
     /**
      * This initialize method populates the Appointments table.
      * @author Will Lapinski
@@ -205,11 +229,22 @@ public class appointmentFormController {
         if (debug) System.out.println("Authenticated user: " + authenticatedUser);
 
         appt_tableView_appts.setItems(Appointment.getAppointmentList());
+        appt_tableColumn_apptId.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
         appt_tableColumn_title.setCellValueFactory(new PropertyValueFactory<>("title"));
         appt_tableColumn_description.setCellValueFactory(new PropertyValueFactory<>("description"));
         appt_tableColumn_location.setCellValueFactory(new PropertyValueFactory<>("location"));
+        appt_tableColumn_contact.setCellValueFactory(new PropertyValueFactory<>("Contact_ID"));
+        appt_tableColumn_type.setCellValueFactory(new PropertyValueFactory<>("type"));
         appt_tableColumn_from.setCellValueFactory(new PropertyValueFactory<>("start"));
         appt_tableColumn_to.setCellValueFactory(new PropertyValueFactory<>("end"));
+        appt_tableColumn_customerId.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
+
+        System.out.println("Printing appointments list: ");
+        System.out.println(Appointment.getAppointmentList());
+
+        for (int i = 0; i < Appointment.getAppointmentList().size(); i++) {
+            System.out.println(Appointment.getAppointmentList().get(i).getCustomer_ID());
+        }
 
     }
 }

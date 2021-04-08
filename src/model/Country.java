@@ -1,7 +1,17 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.utils.DBConnection;
+import model.utils.DBQuery;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * This class is used to create Countries in the program.
@@ -16,6 +26,7 @@ public class Country {
     private String Created_By;
     private LocalDateTime Last_Update;
     private String Last_Updated_By;
+    private static ObservableList<Country> countryList = FXCollections.observableArrayList();
 
     //constructor
     public Country(int country_ID, String country, LocalDateTime create_Date, String created_By, LocalDateTime last_Update, String last_Updated_By) {
@@ -26,6 +37,38 @@ public class Country {
         Last_Update = last_Update;
         Last_Updated_By = last_Updated_By;
     }
+
+    /**
+     * This method is used to instantiate one Country object for each record in the countries table.
+     * @author Will Lapinski
+     */
+    public static void pullCountries() throws SQLException {
+        Connection connection = DBConnection.getConnection();
+        DBQuery.setStatement(connection); //create Statement
+        Statement statement = DBQuery.getStatement(); //get Statement
+        String selectStatement = "SELECT * FROM countries";
+        statement.execute(selectStatement);
+        ResultSet rs = statement.getResultSet();
+
+        //forward scroll through Countries
+        while(rs.next()) {
+            int countryId = rs.getInt("Country_ID");
+            String countryName = rs.getString("Country");
+            LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
+            String createdBy = rs.getString("Created_By");
+            LocalDateTime lastUpdateDateTime = rs.getTimestamp("Last_Update").toLocalDateTime();
+            String lastUpdatedBy = rs.getString("Last_Updated_By");
+
+            //for each record, instantiate a new Country object //FIXME - still need to instantiate these objects.
+            Country country = new Country (countryId, countryName, createDate, createdBy, lastUpdateDateTime, lastUpdatedBy);
+            countryList.add(country);
+
+            //print records
+            System.out.println(countryId + ", " + countryName + ", " + createDate + ", " + createdBy + ", " + lastUpdateDateTime + ", " + lastUpdatedBy); //FIXME - It's wooorking!
+
+        }
+    }
+
 
     //getters and setters
     public int getCountry_ID() {
@@ -74,5 +117,9 @@ public class Country {
 
     public void setLast_Updated_By(String last_Updated_By) {
         Last_Updated_By = last_Updated_By;
+    }
+
+    public static ObservableList<Country> getCountryList() {
+        return countryList;
     }
 }

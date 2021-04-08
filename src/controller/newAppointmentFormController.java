@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.stage.Stage;
 import model.User;
 
-public class updateAppointmentFormController {
+public class newAppointmentFormController {
     Stage stage;
     User authenticatedUser;
     boolean debug = true;
@@ -18,7 +18,7 @@ public class updateAppointmentFormController {
 
     @FXML
     public void initialize() {
-        if (debug) System.out.println("Update Appointment Form initializing...");
+        if (debug) System.out.println("New Appointment Form initializing...");
 
     }
 }

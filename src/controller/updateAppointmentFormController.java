@@ -16,6 +16,16 @@ public class updateAppointmentFormController {
         if (debug) System.out.println("Authenticated user: " + authenticatedUser);
     }
 
+    public void saveHandler() {
+        if (debug) System.out.println("Save handler called...");
+
+
+    }
+    public void cancelHandler() {
+        if (debug) System.out.println("Cancel handler called...");
+        stage.close();
+    }
+
     @FXML
     public void initialize() {
         if (debug) System.out.println("Update Appointment Form initializing...");

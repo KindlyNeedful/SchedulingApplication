@@ -27,6 +27,8 @@ public class loginFormController {
     @FXML
     private Label login_label = new Label();
 
+    private boolean easyLogin = true;
+
     @FXML
     public void loginHandler() {
         System.out.println("loginHandler called");
@@ -114,6 +116,10 @@ public class loginFormController {
     }
 
     public void initialize() {
+        if (easyLogin) {
+            login_textField_username.setText("test");
+            login_textField_password.setText("test");
+        }
         login_button_exit.setVisible(false);
     }
 

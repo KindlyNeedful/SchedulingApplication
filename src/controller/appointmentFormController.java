@@ -90,7 +90,7 @@ public class appointmentFormController {
     }
     @FXML
     public void newApptHandler() {
-        launchNewAppointmentForm(authenticatedUser);
+        launchNewAppointmentForm();
     }
 
 
@@ -119,14 +119,62 @@ public class appointmentFormController {
     @FXML
     public void launchAppointmentUpdateForm(User authenticatedUser) {
         if (debug) System.out.println("Launching Update Appointment / Details Form as " + authenticatedUser + "...");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/updateAppointmentForm.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setTitle("Update Appointment Form");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            updateAppointmentFormController controller3 = loader.getController();
+            controller3.send(stage, authenticatedUser);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     public void launchCancelAppointmentForm(User authenticatedUser) {
         if (debug) System.out.println("Launching Cancel Appointment Form as " + authenticatedUser + "...");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/cancelAppointmentForm.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setTitle("Cancel Appointment Form");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            cancelAppointmentFormController controller4 = loader.getController();
+            controller4.send(stage, authenticatedUser);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @FXML
-    public void launchNewAppointmentForm(User authenticatedUser) {
+    public void launchNewAppointmentForm() {
         if (debug) System.out.println("Launching New Appointment Form as " + authenticatedUser + "...");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/newAppointmentForm.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setTitle("New Appointment Form");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            newAppointmentFormController controller5 = loader.getController();
+            controller5.send(stage, authenticatedUser);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public User getAuthenticatedUser() {

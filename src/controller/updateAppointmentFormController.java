@@ -62,7 +62,6 @@ public class updateAppointmentFormController {
         updateAppt_textField_apptId.setText(String.valueOf(selectedAppointment.getAppointment_ID()));
         updateAppt_textField_title.setText(selectedAppointment.getTitle());
         updateAppt_textField_description.setText(selectedAppointment.getDescription());
-        //updateAppt_textField_location.setText(selectedAppointment.getLocation()); //FIXME - delete?
         updateAppt_choiceBox_location.getSelectionModel().select(selectedAppointment.getLocation());
         updateAppt_textField_type.setText(selectedAppointment.getType());
         updateAppt_textField_start.setText(String.valueOf(selectedAppointment.getStart()));
@@ -81,13 +80,18 @@ public class updateAppointmentFormController {
         description = updateAppt_textField_description.getText();
         location = updateAppt_choiceBox_location.getSelectionModel().getSelectedItem().toString();
         type = updateAppt_textField_type.getText();
-        start = (Timestamp.valueOf(updateAppt_textField_start.getText())).toLocalDateTime();
-        end = (Timestamp.valueOf(updateAppt_textField_end.getText())).toLocalDateTime();
+//        start = (Timestamp.valueOf(updateAppt_textField_start.getText())).toLocalDateTime();
+//        end = (Timestamp.valueOf(updateAppt_textField_end.getText())).toLocalDateTime();
+        start = LocalDateTime.parse(updateAppt_textField_start.getText());
+        end = LocalDateTime.parse(updateAppt_textField_end.getText());
+        System.out.println(start);
+        System.out.println(end);
+
         customerId = Integer.parseInt(updateAppt_textField_customerId.getText());
         contactId = Integer.parseInt(updateAppt_textField_contactId.getText());
 
         //pass the data into the SQL command method
-        updateAppointment(title, description, location, type, start, end, customerId, contactId);
+        updateAppointment(appointmentId, title, description, location, type, start, end, customerId, contactId); //FIXME
         stage.close();
 
     }
@@ -100,23 +104,37 @@ public class updateAppointmentFormController {
      * This method runs the SQL command to update a record.
      * @author Will Lapinski
      */
-    public void updateAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerId, int contactId) throws SQLException {
+    public void updateAppointment(int appointmentId, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerId, int contactId) throws SQLException {
         Connection connection = DBConnection.getConnection();
         DBQuery.setStatement(connection); //create Statement
         Statement statement = DBQuery.getStatement(); //get Statement
 
+        start = Timestamp.valueOf(start).toLocalDateTime();
+        end = Timestamp.valueOf(end).toLocalDateTime();
+
         int userId = authenticatedUser.getUser_ID();
+//        String updateStatement = "UPDATE appointments \n" +
+//                "\tSET Title=\"" + title + "\",\n" +
+//                "    Description=\"" + description + "\",\n" +
+//                "    Location=\"" + location + "\",\n" +
+//                "    Type=\"" + type + "\",\n" +
+//                "    Start=\'" + start + "\',\n" +
+//                "    End=\''" + end + "\',\n" +
+//                "    Customer_ID=" + customerId + ",\n" +
+//                "    Contact_ID=" + contactId + "\n" +
+//                "    WHERE (Appointment_ID=" + appointmentId + ");";
+        //statement.execute(updateStatement);
+
         String updateStatement = "UPDATE appointments \n" +
                 "\tSET Title=\"" + title + "\",\n" +
                 "    Description=\"" + description + "\",\n" +
                 "    Location=\"" + location + "\",\n" +
                 "    Type=\"" + type + "\",\n" +
                 "    Start=\'" + start + "\',\n" +
-                "    End=\''" + end + "\',\n" +
+                "    End=\'" + end + "\',\n" +
                 "    Customer_ID=" + customerId + ",\n" +
                 "    Contact_ID=" + contactId + "\n" +
                 "    WHERE (Appointment_ID=" + appointmentId + ");";
-
         statement.execute(updateStatement);
 
         //GET THE NUMBER OF AFFECTED ROWS   //FIXME - DRY!

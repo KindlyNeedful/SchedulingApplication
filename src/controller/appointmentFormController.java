@@ -65,6 +65,8 @@ public class appointmentFormController {
     private TableColumn appt_tableColumn_to = new TableColumn();
     @FXML
     private TableColumn appt_tableColumn_customerId = new TableColumn();
+    @FXML
+    private Button appt_button_back = new Button();
 
     @FXML
     private Label appt_label_errorOutput = new Label();
@@ -105,8 +107,10 @@ public class appointmentFormController {
     public void newApptHandler() {
         launchNewAppointmentForm();
     }
+    @FXML
+    public void backHandler() {stage.close();}
 
-
+    //launchers
     @FXML
     public void launchSettingsForm(User authenticatedUser) {
         if (debug) System.out.println("Launching Settings Form as " + authenticatedUser + "...");

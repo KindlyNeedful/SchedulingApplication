@@ -59,7 +59,7 @@ public class Country {
             LocalDateTime lastUpdateDateTime = rs.getTimestamp("Last_Update").toLocalDateTime();
             String lastUpdatedBy = rs.getString("Last_Updated_By");
 
-            //for each record, instantiate a new Country object //FIXME - still need to instantiate these objects.
+            //for each record, instantiate a new Country object
             Country country = new Country (countryId, countryName, createDate, createdBy, lastUpdateDateTime, lastUpdatedBy);
             countryList.add(country);
 
@@ -122,4 +122,44 @@ public class Country {
     public static ObservableList<Country> getCountryList() {
         return countryList;
     }
+
+    public static Country lookupCountryByName(String countryName) {
+        for (int i = 0; i < getCountryList().size(); i++) {
+            if (getCountryList().get(i).getCountry().equals(countryName)) {
+                return countryList.get(i);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @author Will Lapinski
+     * @param country the given country
+     * @return a list of all Divisions associated with the given Country
+     * @throws SQLException
+     */
+    public static ObservableList<Division> getDivisions(Country country) throws SQLException {
+        ObservableList<Division> divisionList = FXCollections.observableArrayList();
+
+        //loop through the master Division list. If it belongs to the specified country, add it to our divisionList.
+        for (int i = 0; i < Division.getDivisionList().size(); i++) {
+            if (Division.getDivisionList().get(i).getCountry_ID() == country.getCountry_ID()) {
+                divisionList.add(Division.getDivisionList().get(i));
+            }
+        }
+        return divisionList;
+    }
+
+    public static ObservableList<String> getDivisionNames(Country country) throws SQLException {
+        ObservableList<String> divisionList = FXCollections.observableArrayList();
+
+        //loop through the master Division list. If it belongs to the specified country, add it to our divisionList.
+        for (int i = 0; i < Division.getDivisionList().size(); i++) {
+            if (Division.getDivisionList().get(i).getCountry_ID() == country.getCountry_ID()) {
+                divisionList.add(Division.getDivisionList().get(i).getDivision());
+            }
+        }
+        return divisionList;
+    }
+
 }

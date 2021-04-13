@@ -7,6 +7,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.User;
 
+import java.time.ZoneId;
+import java.util.Locale;
+
 
 /**
  *
@@ -74,10 +77,10 @@ public class settingsFormController {
         settings_choiceBox_language.getItems().add("English");
         settings_choiceBox_language.getItems().add("French");
 
-        settings_choiceBox_timeZone.getItems().add("London, England");
-        settings_choiceBox_timeZone.getItems().add("Montréal, Québec");
-        settings_choiceBox_timeZone.getItems().add("Phoenix, Arizona");
-        settings_choiceBox_timeZone.getItems().add("White Plains, New York");
+//        settings_choiceBox_timeZone.getItems().add("London, England");        //FIXME - need a full list of timezones.
+//        settings_choiceBox_timeZone.getItems().add("Montréal, Québec");
+//        settings_choiceBox_timeZone.getItems().add("Phoenix, Arizona");
+//        settings_choiceBox_timeZone.getItems().add("White Plains, New York");
 
 
 
@@ -85,7 +88,19 @@ public class settingsFormController {
 
     @FXML
     public void initialize() {
-        if (debug) System.out.println("Settings Form initializing...");
+        if (debug) {
+            System.out.println("Settings Form initializing...");
+            System.out.println("Default system Zone ID: " + ZoneId.systemDefault());
+            System.out.println("Java default locale: " + Locale.getDefault());
+            System.out.println("Java country: " + Locale.getDefault().getCountry());
+            System.out.println("Java language: " + Locale.getDefault().getLanguage());
+        }
+
+        if (Locale.getDefault().getLanguage().equals("fr")) {
+            settings_choiceBox_language.getSelectionModel().select("French");
+        } else {
+            settings_choiceBox_language.getSelectionModel().select("English");
+        }
 
 
     }

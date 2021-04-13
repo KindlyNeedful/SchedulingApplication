@@ -1,5 +1,14 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.utils.DBConnection;
+import model.utils.DBQuery;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 
 /**
@@ -19,6 +28,7 @@ public class Customer {
     private LocalDateTime Last_Update;
     private String Last_Updated_By;
     private int Division_ID;
+    private static ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
     //constructor
     public Customer(int customer_ID, String customer_Name, String address, String postal_Code, String phone, LocalDateTime create_Date, String created_By, LocalDateTime last_Update, String last_Updated_By, int division_ID) {
@@ -33,6 +43,38 @@ public class Customer {
         Last_Updated_By = last_Updated_By;
         Division_ID = division_ID;
     }
+
+    /**
+     * This method is used to instantiate one Customer object for each record in the customers table.
+     * @author Will Lapinski
+     */
+    public static void pullCustomers() throws SQLException {
+        Connection connection = DBConnection.getConnection();
+        DBQuery.setStatement(connection); //create Statement
+        Statement statement = DBQuery.getStatement(); //get Statement
+        String selectStatement = "SELECT * FROM customers";
+        statement.execute(selectStatement);
+        ResultSet rs = statement.getResultSet();
+
+        //forward scroll through Customers
+        while(rs.next()) {
+            int customerId = rs.getInt("Customer_ID");
+            String customerName = rs.getString("Customer_Name");
+            String address = rs.getString("Address");
+            String postalCode = rs.getString("Postal_Code");
+            String phoneNumber = rs.getString("Phone");
+            LocalDateTime createDate = rs.getTimestamp("Create_Date").toLocalDateTime();
+            String createdBy = rs.getString("Created_By");
+            LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
+            String lastUpdatedBy = rs.getString("Last_Updated_By");
+            int divisionId = rs.getInt("Division_ID");
+
+            //for each record, instantiate a new Customer object
+            Customer customer = new Customer (customerId, customerName, address, postalCode, phoneNumber, createDate, createdBy, lastUpdate, lastUpdatedBy, divisionId);
+            customerList.add(customer);
+        }
+    }
+
 
     //getters and setters
     public int getCustomer_ID() {
@@ -111,7 +153,7 @@ public class Customer {
         return Division_ID;
     }
 
-    public void setDivision_ID(int division_ID) {
-        Division_ID = division_ID;
-    }
+    public void setDivision_ID(int division_ID) { Division_ID = division_ID; }
+
+    public static ObservableList<Customer> getCustomerList() {return customerList;}
 }

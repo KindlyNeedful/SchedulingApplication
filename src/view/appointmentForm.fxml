@@ -37,7 +37,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="79.0" prefWidth="110.0" spacing="10.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="110.0" spacing="10.0">
                      <children>
                         <RadioButton fx:id="appt_rb_week" mnemonicParsing="false" onAction="#rb_weekHandler" selected="true" text="View by Week">
                            <toggleGroup>
@@ -54,6 +54,11 @@
                      </children>
                   </VBox>
                   <Label fx:id="appt_label_errorOutput" textAlignment="CENTER" wrapText="true" />
+                  <VBox alignment="BOTTOM_RIGHT" prefHeight="210.0" prefWidth="110.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="appt_button_back" cancelButton="true" mnemonicParsing="false" onAction="#backHandler" prefHeight="30.0" prefWidth="50.0" text="Back" textAlignment="CENTER" />
+                     </children>
+                  </VBox>
                </children>
             </VBox>
          </children>
@@ -62,7 +67,7 @@
    <top>
       <HBox prefHeight="80.0" prefWidth="960.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="940.0" spacing="10.0" style="-fx-background-color: silver;">
+            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="1199.0" spacing="10.0" style="-fx-background-color: silver;">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
@@ -75,22 +80,12 @@
             </HBox>
             <VBox prefHeight="80.0" prefWidth="260.0" style="-fx-background-color: grey;">
                <children>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="105.0" prefWidth="200.0" style="-fx-font-weight: bold;">
-                     <children>
-                        <Label fx:id="appt_label_username" alignment="CENTER" style="-fx-font-weight: bold;" text="[username]">
-                           <font>
-                              <Font size="16.0" />
-                           </font></Label>
-                     </children>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="160.0" style="-fx-font-weight: bold;">
                      <padding>
                         <Insets right="10.0" />
                      </padding>
                   </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="0.0" prefWidth="200.0" spacing="10.0">
-                     <children>
-                        <Button fx:id="appt_button_settings" mnemonicParsing="false" onAction="#settingsHandler" prefHeight="25.0" prefWidth="80.0" text="Settings" />
-                        <Button fx:id="appt_button_signOut" cancelButton="true" mnemonicParsing="false" onAction="#signOutHandler" prefHeight="25.0" prefWidth="80.0" text="Sign out" />
-                     </children>
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

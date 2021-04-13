@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.customerFormController">
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="520.0" prefWidth="860.0" spacing="10.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <TableView fx:id="customer_tableView_customers" prefHeight="500.0" prefWidth="840.0">
+                    <columns>
+                        <TableColumn fx:id="customer_tableColumn_customerId" prefWidth="90.0" text="Customer ID" />
+                      <TableColumn fx:id="customer_tableColumn_name" prefWidth="180.0" text="Name" />
+                      <TableColumn fx:id="customer_tableColumn_address" prefWidth="180.0" text="Address" />
+                        <TableColumn fx:id="customer_tableColumn_postalCode" prefWidth="120.0" text="Postal Code" />
+                        <TableColumn fx:id="customer_tableColumn_division" prefWidth="150.0" text="Division" />
+                        <TableColumn fx:id="customer_tableColumn_phoneNumber" prefWidth="120.0" text="Phone" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
+            <VBox prefHeight="520.0" prefWidth="140.0" spacing="10.0" style="-fx-background-color: silver;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER" prefHeight="260.0" prefWidth="120.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="customer_button_newCustomer" mnemonicParsing="false" onAction="#newCustomerHandler" prefHeight="45.0" prefWidth="120.0" text="New Customer" textAlignment="CENTER" />
+                        <Button fx:id="customer_button_updateCustomer" mnemonicParsing="false" onAction="#updateCustomerHandler" prefHeight="45.0" prefWidth="120.0" text="Update Customer" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="customer_button_deleteCustomer" mnemonicParsing="false" onAction="#deleteCustomerHandler" prefHeight="45.0" prefWidth="120.0" text="Delete Customer" textAlignment="CENTER" />
+                     </children>
+                  </VBox>
+                  <Label fx:id="appt_label_errorOutput" textAlignment="CENTER" wrapText="true" />
+                  <VBox alignment="BOTTOM_RIGHT" prefHeight="210.0" prefWidth="110.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="customer_button_back" cancelButton="true" mnemonicParsing="false" onAction="#backHandler" prefHeight="30.0" prefWidth="50.0" text="Back" textAlignment="CENTER" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <top>
+      <HBox prefHeight="80.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="860.0" spacing="10.0" style="-fx-background-color: silver;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Label style="-fx-font-weight: bold;" text="Customers">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+               </children>
+            </HBox>
+            <VBox prefHeight="80.0" prefWidth="140.0" style="-fx-background-color: grey;" />
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

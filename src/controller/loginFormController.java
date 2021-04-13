@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Locale;
 
 public class loginFormController {
     @FXML
@@ -110,7 +111,8 @@ public class loginFormController {
                     login_textField_username.setText("");
                     login_textField_password.setText("");
                     //Launch AppointmentForm, pass in the authenticated user.
-                    launchAppointmentForm(user);
+                    //launchAppointmentForm(user);
+                    launchMainForm(user);
 
                     return true;
                 }
@@ -119,6 +121,27 @@ public class loginFormController {
         login_label.setText("Login failure.");
         return false;
 
+    }
+
+    @FXML
+    private void launchMainForm(User authenticatedUser) {
+        try {
+            System.out.println("Launching Appointment Form as " + authenticatedUser + "...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/mainForm.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+
+            mainFormController controller6 = loader.getController();
+            controller6.send(stage, authenticatedUser);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setTitle("Main Form");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -145,6 +168,7 @@ public class loginFormController {
         }
     }
 
+
     public void initialize() {
         if (easyLogin) {
             login_textField_username.setText("test");
@@ -152,6 +176,13 @@ public class loginFormController {
         }
         System.out.println("Default system Zone ID: " + ZoneId.systemDefault());
         locationLabel.setText("Location: " + ZoneId.systemDefault());
+
+        String defaultLanguage = Locale.getDefault().getLanguage();
+
+        Locale.getDefault();
+        System.out.println("Java default locale: " + Locale.getDefault());
+        System.out.println("Java country: " + Locale.getDefault().getCountry());
+        System.out.println("Java language: " + Locale.getDefault().getLanguage());
 
 
     }

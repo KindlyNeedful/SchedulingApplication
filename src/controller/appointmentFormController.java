@@ -79,10 +79,10 @@ public class appointmentFormController {
     }
     @FXML
     public void signOutHandler() {
+        System.out.println("Signing out...");
         authenticatedUser = null;
         appt_label_errorOutput.setText("");
-        System.out.println("Exiting...");
-        System.exit(1);
+        stage.close();
     }
     @FXML
     public void rb_weekHandler() {

@@ -23,7 +23,7 @@ public class loginFormController {
     @FXML
     private Button login_button_go = new Button();
     @FXML
-    private Button login_button_exit = new Button();  //FIXME - button is becoming visible at weird times.
+    private Button login_button_exit = new Button();
     @FXML
     private Label login_label = new Label();
 
@@ -122,7 +122,6 @@ public class loginFormController {
             login_textField_username.setText("test");
             login_textField_password.setText("test");
         }
-        login_button_exit.setVisible(false);
     }
 
 }

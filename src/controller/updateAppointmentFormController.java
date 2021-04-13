@@ -5,6 +5,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.User;
+import model.utils.DBConnection;
+import model.utils.DBQuery;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class updateAppointmentFormController {
     Stage stage;
@@ -31,6 +39,16 @@ public class updateAppointmentFormController {
     @FXML
     private TextField updateAppt_textField_contactId = new TextField();
 
+    private int appointmentId = 0;
+    private String title = "";
+    private String description = "";
+    private String location = "";
+    private String type = "";
+    private LocalDateTime start;
+    private LocalDateTime end;
+    private int customerId = 0;
+    private int contactId = 0;
+
     public void send(Stage sentStage, User user, Appointment appt) {
         stage = sentStage;
         authenticatedUser = user;
@@ -39,26 +57,61 @@ public class updateAppointmentFormController {
         if (debug) System.out.println("Authenticated user: " + authenticatedUser);
         if (debug) System.out.println("Appointment to update: " + user);
 
-        //populate the fields
-        updateAppt_textField_apptId.setText(String.valueOf(selectedAppointment.getAppointment_ID()));
-        updateAppt_textField_title.setText(selectedAppointment.getTitle());
-        updateAppt_textField_description.setText(selectedAppointment.getDescription());
-        updateAppt_textField_location.setText(selectedAppointment.getLocation());
-        updateAppt_textField_type.setText(selectedAppointment.getType());
-        updateAppt_textField_start.setText(String.valueOf(selectedAppointment.getStart()));
-        updateAppt_textField_end.setText(String.valueOf(selectedAppointment.getEnd()));
-        updateAppt_textField_customerId.setText(String.valueOf(selectedAppointment.getCustomer_ID()));
-        updateAppt_textField_contactId.setText(String.valueOf(selectedAppointment.getContact_ID()));
     }
 
-    public void saveHandler() {
+    public void saveHandler() throws SQLException {
         if (debug) System.out.println("Save handler called...");
 
+        //update local variables
+        appointmentId = selectedAppointment.getAppointment_ID();
+        title = updateAppt_textField_title.getText();
+        description = updateAppt_textField_description.getText();
+        location = updateAppt_textField_location.getText();
+        type = updateAppt_textField_type.getText();
+        start = Timestamp.valueOf(updateAppt_textField_start.getText()).toLocalDateTime();
+        end = Timestamp.valueOf(updateAppt_textField_end.getText()).toLocalDateTime();
+        customerId = Integer.parseInt(updateAppt_textField_customerId.getText());
+        contactId = Integer.parseInt(updateAppt_textField_contactId.getText());
+
+        //pass the data into the SQL command method
+        updateAppointment(title, description, location, type, start, end, customerId, contactId);
+        stage.close();
 
     }
     public void cancelHandler() {
         if (debug) System.out.println("Cancel handler called...");
         stage.close();
+    }
+
+    /**
+     * This method runs the SQL command to update a record.
+     * @author Will Lapinski
+     */
+    public void updateAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerId, int contactId) throws SQLException {
+        Connection connection = DBConnection.getConnection();
+        DBQuery.setStatement(connection); //create Statement
+        Statement statement = DBQuery.getStatement(); //get Statement
+
+        int userId = authenticatedUser.getUser_ID();
+        String updateStatement = "UPDATE appointments \n" +
+                "\tSET Title=\"" + title + "\",\n" +
+                "    Description=\"" + description + "\",\n" +
+                "    Location=\"" + location + "\",\n" +
+                "    Type=\"" + type + "\",\n" +
+                "    Start='2020-01-01T00:00:00',\n" +  //FIXME
+                "    End='2020-01-01T00:00:00',\n" +    //FIXME
+                "    Customer_ID=" + customerId + ",\n" +
+                "    Contact_ID=" + contactId + "\n" +
+                "    WHERE (Appointment_ID=" + appointmentId + ");";
+
+        statement.execute(updateStatement);
+
+        //GET THE NUMBER OF AFFECTED ROWS   //FIXME - DRY!
+        if (statement.getUpdateCount() > 0) {
+            System.out.println("Rows affected: " + statement.getUpdateCount());
+        } else {
+            System.out.println("No change.");
+        }
     }
 
     @FXML

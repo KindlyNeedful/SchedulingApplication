@@ -69,6 +69,7 @@ public class newAppointmentFormController {
         int customerId = Integer.parseInt(newAppt_textField_customerId.getText());
         int contactId = Integer.parseInt(newAppt_textField_contactId.getText());
 
+        //pass the data into the SQL command method
         addAppointment(title, description, location, type, start, end, customerId, contactId);
         stage.close();
 

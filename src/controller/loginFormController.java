@@ -14,6 +14,7 @@ import model.Main;
 import model.User;
 
 import java.io.IOException;
+import java.time.ZoneId;
 
 public class loginFormController {
     @FXML
@@ -26,18 +27,26 @@ public class loginFormController {
     private Button login_button_exit = new Button();
     @FXML
     private Label login_label = new Label();
+    @FXML
+    private Label locationLabel = new Label();
 
+    //this is the switch to auto-populate the login fields.
     private boolean easyLogin = true;
+    private boolean debug = true;
 
     @FXML
     public void loginHandler() {
-        System.out.println("loginHandler called");
+        if (debug) System.out.println("loginHandler called");
         validateLogin();
     }
     @FXML
     public void exitHandler() {
         System.out.println("Exiting...");
         System.exit(1);
+    }
+    @FXML
+    public void locationHandler() {
+        if (debug) System.out.println("locationHandler called");
     }
 
 
@@ -122,6 +131,10 @@ public class loginFormController {
             login_textField_username.setText("test");
             login_textField_password.setText("test");
         }
+        System.out.println("Default system Zone ID: " + ZoneId.systemDefault());
+        locationLabel.setText("Location: " + ZoneId.systemDefault());
+
+
     }
 
 }

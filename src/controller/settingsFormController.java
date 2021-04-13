@@ -70,6 +70,17 @@ public class settingsFormController {
 
         settings_textField_name.setText(authenticatedUser.getUser_Name()); //FIXME - should actually pull from Customer table. How do Users correspond to Customers?
 
+        //populate choiceboxes
+        settings_choiceBox_language.getItems().add("English");
+        settings_choiceBox_language.getItems().add("French");
+
+        settings_choiceBox_timeZone.getItems().add("London, England");
+        settings_choiceBox_timeZone.getItems().add("Montréal, Québec");
+        settings_choiceBox_timeZone.getItems().add("Phoenix, Arizona");
+        settings_choiceBox_timeZone.getItems().add("White Plains, New York");
+
+
+
     }
 
     @FXML

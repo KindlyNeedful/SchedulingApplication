@@ -57,6 +57,17 @@ public class updateAppointmentFormController {
         if (debug) System.out.println("Authenticated user: " + authenticatedUser);
         if (debug) System.out.println("Appointment to update: " + user);
 
+        //populate the fields
+        updateAppt_textField_apptId.setText(String.valueOf(selectedAppointment.getAppointment_ID()));
+        updateAppt_textField_title.setText(selectedAppointment.getTitle());
+        updateAppt_textField_description.setText(selectedAppointment.getDescription());
+        updateAppt_textField_location.setText(selectedAppointment.getLocation());
+        updateAppt_textField_type.setText(selectedAppointment.getType());
+        updateAppt_textField_start.setText(String.valueOf(selectedAppointment.getStart()));
+        updateAppt_textField_end.setText(String.valueOf(selectedAppointment.getEnd()));
+        updateAppt_textField_customerId.setText(String.valueOf(selectedAppointment.getCustomer_ID()));
+        updateAppt_textField_contactId.setText(String.valueOf(selectedAppointment.getContact_ID()));
+
     }
 
     public void saveHandler() throws SQLException {

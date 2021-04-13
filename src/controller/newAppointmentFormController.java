@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.User;
@@ -24,7 +25,7 @@ public class newAppointmentFormController {
     @FXML
     private TextField newAppt_textField_description = new TextField();
     @FXML
-    private TextField newAppt_textField_location = new TextField();
+    private ChoiceBox newAppt_choiceBox_location = new ChoiceBox();
     @FXML
     private TextField newAppt_textField_type = new TextField();
     @FXML
@@ -45,7 +46,9 @@ public class newAppointmentFormController {
         if (prefill) {
             newAppt_textField_title.setText("test title");
             newAppt_textField_description.setText("test description");
-            newAppt_textField_location.setText("test location");
+            //newAppt_textField_location.setText("test location");
+            //newAppt_choiceBox_location.setSelectionModel("London, England");
+            newAppt_choiceBox_location.getSelectionModel().selectFirst();
             newAppt_textField_type.setText("test type");
             newAppt_textField_start.setText("2021-01-01 00:00:00");
             newAppt_textField_end.setText("2021-01-01 00:00:00");
@@ -62,7 +65,7 @@ public class newAppointmentFormController {
 
         String title = newAppt_textField_title.getText();
         String description = newAppt_textField_description.getText();
-        String location = newAppt_textField_location.getText();
+        String location = newAppt_choiceBox_location.getSelectionModel().getSelectedItem().toString();
         String type = newAppt_textField_type.getText();
         LocalDateTime start = (Timestamp.valueOf(newAppt_textField_start.getText())).toLocalDateTime();
         LocalDateTime end = (Timestamp.valueOf(newAppt_textField_end.getText())).toLocalDateTime();
@@ -101,6 +104,8 @@ public class newAppointmentFormController {
         } else {
             System.out.println("No change.");
         }
+
+        //appointmentFormController.refreshTable(); //FIXME - REFRESH!!!!!!
     }
 
 
@@ -108,6 +113,9 @@ public class newAppointmentFormController {
     @FXML
     public void initialize() {
         if (debug) System.out.println("New Appointment Form initializing...");
-
+        newAppt_choiceBox_location.getItems().add("London, England");
+        newAppt_choiceBox_location.getItems().add("Montréal, Québec");
+        newAppt_choiceBox_location.getItems().add("Phoenix, Arizona");
+        newAppt_choiceBox_location.getItems().add("White Plains, New York");
     }
 }

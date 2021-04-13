@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Appointment;
@@ -27,7 +28,7 @@ public class updateAppointmentFormController {
     @FXML
     private TextField updateAppt_textField_description = new TextField();
     @FXML
-    private TextField updateAppt_textField_location = new TextField();
+    private ChoiceBox updateAppt_choiceBox_location = new ChoiceBox();
     @FXML
     private TextField updateAppt_textField_type = new TextField();
     @FXML
@@ -61,7 +62,8 @@ public class updateAppointmentFormController {
         updateAppt_textField_apptId.setText(String.valueOf(selectedAppointment.getAppointment_ID()));
         updateAppt_textField_title.setText(selectedAppointment.getTitle());
         updateAppt_textField_description.setText(selectedAppointment.getDescription());
-        updateAppt_textField_location.setText(selectedAppointment.getLocation());
+        //updateAppt_textField_location.setText(selectedAppointment.getLocation()); //FIXME - delete?
+        updateAppt_choiceBox_location.getSelectionModel().select(selectedAppointment.getLocation());
         updateAppt_textField_type.setText(selectedAppointment.getType());
         updateAppt_textField_start.setText(String.valueOf(selectedAppointment.getStart()));
         updateAppt_textField_end.setText(String.valueOf(selectedAppointment.getEnd()));
@@ -77,10 +79,10 @@ public class updateAppointmentFormController {
         appointmentId = selectedAppointment.getAppointment_ID();
         title = updateAppt_textField_title.getText();
         description = updateAppt_textField_description.getText();
-        location = updateAppt_textField_location.getText();
+        location = updateAppt_choiceBox_location.getSelectionModel().getSelectedItem().toString();
         type = updateAppt_textField_type.getText();
-        start = Timestamp.valueOf(updateAppt_textField_start.getText()).toLocalDateTime();
-        end = Timestamp.valueOf(updateAppt_textField_end.getText()).toLocalDateTime();
+        start = (Timestamp.valueOf(updateAppt_textField_start.getText())).toLocalDateTime();
+        end = (Timestamp.valueOf(updateAppt_textField_end.getText())).toLocalDateTime();
         customerId = Integer.parseInt(updateAppt_textField_customerId.getText());
         contactId = Integer.parseInt(updateAppt_textField_contactId.getText());
 
@@ -109,8 +111,8 @@ public class updateAppointmentFormController {
                 "    Description=\"" + description + "\",\n" +
                 "    Location=\"" + location + "\",\n" +
                 "    Type=\"" + type + "\",\n" +
-                "    Start='2020-01-01T00:00:00',\n" +  //FIXME
-                "    End='2020-01-01T00:00:00',\n" +    //FIXME
+                "    Start=\'" + start + "\',\n" +
+                "    End=\''" + end + "\',\n" +
                 "    Customer_ID=" + customerId + ",\n" +
                 "    Contact_ID=" + contactId + "\n" +
                 "    WHERE (Appointment_ID=" + appointmentId + ");";
@@ -128,6 +130,11 @@ public class updateAppointmentFormController {
     @FXML
     public void initialize() {
         if (debug) System.out.println("Update Appointment Form initializing...");
+
+        updateAppt_choiceBox_location.getItems().add("London, England");
+        updateAppt_choiceBox_location.getItems().add("Montréal, Québec");
+        updateAppt_choiceBox_location.getItems().add("Phoenix, Arizona");
+        updateAppt_choiceBox_location.getItems().add("White Plains, New York");
 
     }
 }

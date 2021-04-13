@@ -13,7 +13,11 @@ import javafx.stage.StageStyle;
 import model.Main;
 import model.User;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class loginFormController {
@@ -30,12 +34,12 @@ public class loginFormController {
     @FXML
     private Label locationLabel = new Label();
 
-    //this is the switch to auto-populate the login fields.
+    //this toggles auto-population of the login fields.
     private boolean easyLogin = true;
     private boolean debug = true;
 
     @FXML
-    public void loginHandler() {
+    public void loginHandler() throws IOException {
         if (debug) System.out.println("loginHandler called");
         validateLogin();
     }
@@ -49,30 +53,45 @@ public class loginFormController {
         if (debug) System.out.println("locationHandler called");
     }
 
+    public void logActivity(String username, Boolean success) throws IOException {
+        String successFailure = "";
+        if (debug) System.out.println("logActivity called with user " + username + ", " + "login " + success);
+        if (success) {
+            successFailure = "success";
+        } else {
+            successFailure = "failure";
+        }
+
+        FileWriter fw = new FileWriter("login_activity.txt", true); //True opens FileWriter in Append mode.
+        PrintWriter pw = new PrintWriter(fw);
+        pw.println(LocalDateTime.now() + "," + username + "," + successFailure);
+        pw.close();
+    }
+
 
     /**
      * This method first ensures neither the username nor password fields are empty.
      * Then it checks them against the somethingSomething //FIXME - REEEE
      * @return true if neither the username nor password are blank AND the username/password are a valid combination
      */
-    public boolean validateLogin() {
+    public boolean validateLogin() throws IOException {
         //first ensure neither the username/password fields are empty.  //FIXME - add a specific message "Please enter username AND password".
         if ((login_textField_password.getText().isBlank()) && (login_textField_username.getText().isBlank())) {
-
+            logActivity(login_textField_username.getText(), false);
             login_label.setText("Please enter a username and password.");
             return false;
         } else if (login_textField_username.getText().isBlank()) {
-
+            logActivity(login_textField_username.getText(), false);
             login_label.setText("Please enter a username.");
             return false;
         } else if (login_textField_password.getText().isBlank()) {
-
+            logActivity(login_textField_username.getText(), false);
             login_label.setText("Please enter a password.");
             return false;
         } else {
             //FIXME - ensure the User.User_Name and User.User_Password are a valid combination.
             login_label.setText("");
-
+            logActivity(login_textField_username.getText(), true);
             checkCredentials(login_textField_username.getText(), login_textField_password.getText());
             return true;
         }
@@ -81,8 +100,8 @@ public class loginFormController {
 
     public boolean checkCredentials(String username, String password) {
         System.out.println("Checking credentials... " + username + " " + password);
-        //if the username is found in the list of users, check the password.
 
+        //if the username is found in the list of users, check the password.
         for (int i = 0; i < User.getUserList().size(); i++) {
             User user = User.getUserList().get(i);
             if (user.getUser_Name().equals(username)) {

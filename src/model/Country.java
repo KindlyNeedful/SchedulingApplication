@@ -131,6 +131,14 @@ public class Country {
         }
         return null;
     }
+    public static Country lookupCountryById(int countryId) {
+        for (int i = 0; i < getCountryList().size(); i++) {
+            if (getCountryList().get(i).getCountry_ID() == countryId) {
+                return countryList.get(i);
+            }
+        }
+        return null;
+    }
 
     /**
      * @author Will Lapinski

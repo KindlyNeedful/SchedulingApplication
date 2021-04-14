@@ -63,7 +63,6 @@ public class cancelAppointmentFormController {
         deleteAppointment(selectedAppointment);
         stage.close();
     }
-
     @FXML
     public void noHandler() {
         if (debug) System.out.println("noHandler called...");
@@ -72,7 +71,7 @@ public class cancelAppointmentFormController {
     }
 
     /**
-     * This method runs the SQL command to delete the record.
+     * This method runs the SQL command to delete the appointment record.
      * @author Will Lapinski
      * @param appt the appointment to delete
      */
@@ -83,6 +82,13 @@ public class cancelAppointmentFormController {
         Statement statement = DBQuery.getStatement(); //get Statement
         String deleteStatement = "DELETE FROM appointments WHERE Appointment_ID=" + appt_id;
         statement.execute(deleteStatement);
+
+        //GET THE NUMBER OF AFFECTED ROWS
+        if (statement.getUpdateCount() > 0) {
+            System.out.println("Rows affected: " + statement.getUpdateCount());
+        } else {
+            System.out.println("No change.");
+        }
     }
 
     @FXML

@@ -50,9 +50,11 @@ public class customerFormController {
     }
     public void updateCustomerHandler() {
         if (debug) System.out.println("updateCustomerHandler called");
+        launchUpdateCustomerForm();
     }
     public void deleteCustomerHandler() {
         if (debug) System.out.println("deleteCustomerHandler called");
+        launchDeleteCustomerForm();
     }
     public void backHandler() {
         if (debug) System.out.println("backHandler called");
@@ -79,11 +81,33 @@ public class customerFormController {
             e.printStackTrace();
         }
     }
-    public void updateCustomerForm() {
+    public void launchUpdateCustomerForm() {
+        try {
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    public void deleteNewCustomerForm() {
+    public void launchDeleteCustomerForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/deleteCustomerForm.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setTitle("Delete Customer Form");
+            stage.setScene(new Scene(root));
+            stage.show();
 
+            Customer selectedCustomer = (Customer) customer_tableView_customers.getSelectionModel().getSelectedItem();
+
+            deleteCustomerFormController controller9 = loader.getController();
+            controller9.send(stage, authenticatedUser, selectedCustomer);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -114,7 +138,7 @@ public class customerFormController {
         customer_tableColumn_name.setCellValueFactory(new PropertyValueFactory<>("Customer_Name"));
         customer_tableColumn_address.setCellValueFactory(new PropertyValueFactory<>("Address"));
         customer_tableColumn_postalCode.setCellValueFactory(new PropertyValueFactory<>("Postal_Code"));
-        customer_tableColumn_division.setCellValueFactory(new PropertyValueFactory<>("Division_ID"));
+        customer_tableColumn_division.setCellValueFactory(new PropertyValueFactory<>("Division_ID")); //FIXME - the table is showing Division ID, not Division Name.
         customer_tableColumn_phoneNumber.setCellValueFactory(new PropertyValueFactory<>("Phone"));
 
     }

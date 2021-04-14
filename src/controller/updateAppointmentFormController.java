@@ -113,17 +113,6 @@ public class updateAppointmentFormController {
         end = Timestamp.valueOf(end).toLocalDateTime();
 
         int userId = authenticatedUser.getUser_ID();
-//        String updateStatement = "UPDATE appointments \n" +
-//                "\tSET Title=\"" + title + "\",\n" +
-//                "    Description=\"" + description + "\",\n" +
-//                "    Location=\"" + location + "\",\n" +
-//                "    Type=\"" + type + "\",\n" +
-//                "    Start=\'" + start + "\',\n" +
-//                "    End=\''" + end + "\',\n" +
-//                "    Customer_ID=" + customerId + ",\n" +
-//                "    Contact_ID=" + contactId + "\n" +
-//                "    WHERE (Appointment_ID=" + appointmentId + ");";
-        //statement.execute(updateStatement);
 
         String updateStatement = "UPDATE appointments \n" +
                 "\tSET Title=\"" + title + "\",\n" +

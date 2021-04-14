@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.*;
@@ -30,6 +31,8 @@ public class deleteCustomerFormController {
     private TextField deleteCustomer_textField_division = new TextField();
     @FXML
     private TextField deleteCustomer_textField_country = new TextField();
+    @FXML
+    private Label deleteCustomer_label_outputLabel = new Label();
 
 
 
@@ -43,7 +46,7 @@ public class deleteCustomerFormController {
             System.out.println("Customer to delete: " + selectedCustomer);
         }
 
-        Division customerDivision = Division.getDivisionList().get(selectedCustomer.getDivision_ID());
+        Division customerDivision = Division.lookupDivisionById(selectedCustomer.getDivision_ID());
         Country customerCountry = Country.lookupCountryById(customerDivision.getCountry_ID());
 
         //populate the fields
@@ -58,8 +61,20 @@ public class deleteCustomerFormController {
     @FXML
     public void yesHandler() throws SQLException {
         if (debug) System.out.println("yesHandler called...");
-        deleteCustomer(selectedCustomer);
-        stage.close();
+
+        if (!(selectedCustomer.hasAppointments())) {   //FIXME - testing this first
+            if (debug) System.out.println("Deleting customer " + selectedCustomer.getCustomer_ID());
+            deleteCustomer(selectedCustomer);
+            stage.close();
+        } else {
+            System.out.println("Error: cannot delete a customer with associated appointments!");
+            deleteCustomer_label_outputLabel.setText("Error: cannot delete a customer with associated appointments!");
+        }
+//        System.out.println("Customer 1 has appointments: " + Customer.getCustomerList().get(0).hasAppointments());
+//        System.out.println("Customer 2 has appointments: " + Customer.getCustomerList().get(1).hasAppointments());
+//        System.out.println("Customer 3 has appointments: " + Customer.getCustomerList().get(2).hasAppointments());
+//        System.out.println("Customer 4 has appointments: " + Customer.getCustomerList().get(3).hasAppointments());
+//        System.out.println("Customer 5 has appointments: " + Customer.getCustomerList().get(4).hasAppointments());
     }
     @FXML
     public void noHandler() {
@@ -67,6 +82,8 @@ public class deleteCustomerFormController {
         stage.close();
         //appointmentFormController.refreshTable(); //FIXME - need to refresh the main Customers table
     }
+
+
 
     /**
      * This method runs the SQL command to delete the customer record.

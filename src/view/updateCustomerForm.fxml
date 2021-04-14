@@ -8,16 +8,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.deleteCustomerFormController">
-   <bottom>
-      <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="400.0" spacing="10.0" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.updateCustomerFormController">
+   <top>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: silver;" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
          <children>
-            <Label fx:id="deleteCustomer_label_outputLabel" maxWidth="290.0" prefHeight="40.0" prefWidth="290.0" textAlignment="RIGHT" wrapText="true" />
-            <Button fx:id="deleteCustomer_button_yes" mnemonicParsing="false" onAction="#yesHandler" text="Yes" />
-            <Button fx:id="deleteCustomer_button_no" cancelButton="true" mnemonicParsing="false" onAction="#noHandler" text="No" />
+            <Label style="-fx-font-weight: bold;" text="Update Customer">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <children>
+            <Button fx:id="updateCustomer_button_save" mnemonicParsing="false" onAction="#saveHandler" text="Save" />
+            <Button fx:id="updateCustomer_button_cancel" cancelButton="true" mnemonicParsing="false" onAction="#cancelHandler" text="Cancel" />
          </children>
       </HBox>
    </bottom>
@@ -37,7 +50,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
@@ -51,7 +64,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextField fx:id="deleteCustomer_textField_name" alignment="CENTER_RIGHT" disable="true" editable="false" prefWidth="200.0" />
+                        <TextField fx:id="updateCustomer_textField_name" alignment="CENTER_RIGHT" prefWidth="200.0" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -70,7 +83,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                      <children>
-                        <TextField fx:id="deleteCustomer_textField_address" alignment="CENTER_RIGHT" disable="true" editable="false" prefWidth="200.0" />
+                        <TextField fx:id="updateCustomer_textField_address" alignment="CENTER_RIGHT" prefWidth="200.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="3">
@@ -82,43 +95,11 @@
                      </padding>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <children>
-                        <TextField fx:id="deleteCustomer_textField_postalCode" alignment="CENTER_RIGHT" disable="true" editable="false" prefWidth="200.0" />
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="4">
-                     <children>
-                        <Label text="Division" />
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                      <children>
-                        <TextField fx:id="deleteCustomer_textField_division" alignment="CENTER_RIGHT" disable="true" editable="false" prefWidth="200.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="5">
-                     <children>
-                        <Label text="Country" />
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <children>
-                        <TextField fx:id="deleteCustomer_textField_country" alignment="CENTER_RIGHT" disable="true" editable="false" prefWidth="200.0" />
+                        <TextField fx:id="updateCustomer_textField_postalCode" alignment="CENTER_RIGHT" prefWidth="200.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -129,9 +110,42 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1">
                      <children>
-                        <TextField fx:id="deleteCustomer_textField_customerId" alignment="CENTER_RIGHT" disable="true" editable="false" prefWidth="200.0" />
+                        <TextField fx:id="updateCustomer_textField_customerId" alignment="CENTER_RIGHT" disable="true" prefWidth="200.0" promptText="Auto-generated" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="4">
+                     <children>
+                        <Label text="Country, Division" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <children>
+                        <ComboBox fx:id="updateCustomer_comboBox_country" onAction="#filterDivisions" prefHeight="30.0" prefWidth="95.0" />
+                        <ComboBox fx:id="updateCustomer_comboBox_division" prefHeight="30.0" prefWidth="95.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="5">
+                     <children>
+                        <Label text="Phone" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <children>
+                        <TextField fx:id="updateCustomer_textField_phone" alignment="CENTER_RIGHT" prefWidth="200.0" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -142,24 +156,4 @@
          </children>
       </HBox>
    </center>
-   <top>
-      <VBox prefHeight="75.0" prefWidth="400.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: silver;">
-               <children>
-                  <Label style="-fx-font-weight: bold;" text="Delete Customer">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="400.0" style="-fx-background-color: yellow;">
-               <children>
-                  <Label style="-fx-font-style: italic;" text="Warning: Are you sure you want to delete this customer?" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </top>
 </BorderPane>

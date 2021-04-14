@@ -139,4 +139,14 @@ public class Division {
         }
         return null;
     }
+    public static Division lookupDivisionById(int divisionId) {
+        for (int i = 0; i < getDivisionList().size(); i++) {
+            if (getDivisionList().get(i).getDivision_ID() == divisionId) {
+                return divisionList.get(i);
+            }
+        }
+        return null;
+    }
+
+
 }

@@ -53,8 +53,12 @@
                         <Button fx:id="appt_button_cancel" mnemonicParsing="false" onAction="#cancelHandler" prefHeight="45.0" prefWidth="120.0" text="Cancel Appt" textAlignment="CENTER" />
                      </children>
                   </VBox>
-                  <Label fx:id="appt_label_errorOutput" textAlignment="CENTER" wrapText="true" />
-                  <VBox alignment="BOTTOM_RIGHT" prefHeight="210.0" prefWidth="110.0" spacing="10.0">
+                  <VBox alignment="TOP_RIGHT" prefHeight="120.0" prefWidth="110.0">
+                     <children>
+                        <Label fx:id="appt_label_errorOutput" textAlignment="CENTER" wrapText="true" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="BOTTOM_RIGHT" prefHeight="110.0" prefWidth="110.0" spacing="10.0">
                      <children>
                         <Button fx:id="appt_button_back" cancelButton="true" mnemonicParsing="false" onAction="#backHandler" prefHeight="30.0" prefWidth="50.0" text="Back" textAlignment="CENTER" />
                      </children>

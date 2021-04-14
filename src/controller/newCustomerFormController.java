@@ -117,6 +117,10 @@ public class newCustomerFormController {
         for (int i = 0; i < Country.getCountryList().size(); i++) {
             newCustomer_comboBox_country.getItems().add(Country.getCountryList().get(i).getCountry());
         }
+        //for each item in the division list, add it to the combo box.
+        for (int i = 0; i < Division.getDivisionList().size(); i++) {
+            newCustomer_comboBox_division.getItems().add(Division.getDivisionList().get(i).getDivision());
+        }
 
     }
 }

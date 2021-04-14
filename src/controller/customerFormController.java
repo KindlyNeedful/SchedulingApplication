@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -38,6 +39,10 @@ public class customerFormController {
     private Button customer_button_deleteCustomer = new Button();
     @FXML
     private Button customer_button_back = new Button();
+
+    @FXML
+    private Label customer_label_errorOutput = new Label();
+
 
     private boolean debug = true;
     private Stage stage = null;
@@ -82,31 +87,57 @@ public class customerFormController {
         }
     }
     public void launchUpdateCustomerForm() {
-        try {
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (customer_tableView_customers.getSelectionModel().getSelectedItems().isEmpty()) {
+            System.out.println("Error: please select a customer."); //FIXME - add a Label.
+            customer_label_errorOutput.setText("Error: please select a customer.");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/updateCustomerForm.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.DECORATED);
+                stage.setTitle("Update Customer Form");
+                stage.setScene(new Scene(root));
+                stage.show();
+
+                Customer selectedCustomer = (Customer) customer_tableView_customers.getSelectionModel().getSelectedItem();
+
+                updateCustomerFormController controller9 = loader.getController();
+                controller9.send(stage, authenticatedUser, selectedCustomer);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
+
     }
     public void launchDeleteCustomerForm() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/deleteCustomerForm.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.DECORATED);
-            stage.setTitle("Delete Customer Form");
-            stage.setScene(new Scene(root));
-            stage.show();
 
-            Customer selectedCustomer = (Customer) customer_tableView_customers.getSelectionModel().getSelectedItem();
+        if (customer_tableView_customers.getSelectionModel().getSelectedItems().isEmpty()) {
+            System.out.println("Error: please select a customer."); //FIXME - add a Label.
+            customer_label_errorOutput.setText("Error: please select a customer.");
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/deleteCustomerForm.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.DECORATED);
+                stage.setTitle("Delete Customer Form");
+                stage.setScene(new Scene(root));
+                stage.show();
 
-            deleteCustomerFormController controller9 = loader.getController();
-            controller9.send(stage, authenticatedUser, selectedCustomer);
+                Customer selectedCustomer = (Customer) customer_tableView_customers.getSelectionModel().getSelectedItem();
 
+                deleteCustomerFormController controller10 = loader.getController();
+                controller10.send(stage, authenticatedUser, selectedCustomer);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

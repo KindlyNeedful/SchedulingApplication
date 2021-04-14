@@ -75,6 +75,18 @@ public class Customer {
         }
     }
 
+    /**
+     * This method checks to see whether a given customer has any appointments.
+     * @return true if there are associated appointments.
+     */
+    public boolean hasAppointments() {
+        for (int i = 0; i < Appointment.getAppointmentList().size(); i++) {
+            if (Appointment.getAppointmentList().get(i).getCustomer_ID() == this.getCustomer_ID()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     //getters and setters
     public int getCustomer_ID() {

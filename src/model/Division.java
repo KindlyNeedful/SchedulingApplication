@@ -130,4 +130,13 @@ public class Division {
     public static ObservableList<Division> getDivisionList() {
         return divisionList;
     }
+
+    public static Division lookupDivisionByName(String divisionName) {
+        for (int i = 0; i < getDivisionList().size(); i++) {
+            if (getDivisionList().get(i).getDivision().equals(divisionName)) {
+                return divisionList.get(i);
+            }
+        }
+        return null;
+    }
 }
